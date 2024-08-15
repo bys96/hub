@@ -1,51 +1,56 @@
 module.exports = (sequelize, DataTypes) => {
   const User = sequelize.define(
-    "User",
+    "user",
     {
-      user_id: {
+      // 테이블 이름을 소문자로 설정
+      id: {
         type: DataTypes.INTEGER,
         autoIncrement: true,
         primaryKey: true,
       },
       social_id: {
         type: DataTypes.STRING(255),
-        allowNull: true, // 소셜 로그인에 따라 null 값 허용
+        allowNull: false,
       },
       social_type: {
-        type: DataTypes.ENUM("Kakao", "Google", "Naver"),
-        allowNull: true, // 소셜 로그인에 따라 null 값 허용
+        type: DataTypes.ENUM("kakao", "naver"),
+        allowNull: false,
+      },
+      job: {
+        type: DataTypes.STRING(255),
+        allowNull: true,
       },
       email: {
         type: DataTypes.STRING(255),
         allowNull: false,
-        validate: {
-          isEmail: true, // 이메일 형식 검사
-        },
+        unique: true,
       },
       nickname: {
         type: DataTypes.STRING(50),
         allowNull: false,
-      },
-      job: {
-        type: DataTypes.STRING(50),
-        allowNull: true,
+        unique: true,
       },
       profile_image: {
         type: DataTypes.STRING(255),
         allowNull: true,
       },
       role: {
-        type: DataTypes.ENUM("User", "Admin"),
-        defaultValue: "User",
+        type: DataTypes.ENUM("user", "admin"),
         allowNull: false,
+        defaultValue: "user",
       },
       created_at: {
         type: DataTypes.DATE,
-        defaultValue: sequelize.literal("CURRENT_TIMESTAMP"),
+        allowNull: false,
+        defaultValue: DataTypes.NOW,
       },
       updated_at: {
         type: DataTypes.DATE,
-        defaultValue: sequelize.literal("CURRENT_TIMESTAMP"),
+        allowNull: true,
+      },
+      deleted_at: {
+        type: DataTypes.DATE,
+        allowNull: true,
       },
       last_login_at: {
         type: DataTypes.DATE,
@@ -53,8 +58,10 @@ module.exports = (sequelize, DataTypes) => {
       },
     },
     {
-      tableName: "Users",
-      timestamps: false, // created_at, updated_at을 수동으로 관리하므로 Sequelize의 자동 타임스탬프 기능 비활성화
+      tableName: "user", // 테이블 이름을 소문자로 설정
+      timestamps: false,
+      paranoid: true,
+      underscored: true,
     }
   );
 

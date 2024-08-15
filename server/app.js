@@ -1,10 +1,11 @@
-require("dotenv").config();
+require("dotenv").config(); // .env 파일의 환경 변수들을 로드합니다
 const express = require("express");
 const bodyParser = require("body-parser");
 const cors = require("cors");
 const morgan = require("morgan");
 const session = require("express-session");
-const db = require("./models"); // Sequelize 인스턴스를 가져옵니다.
+
+const db = require("./models"); // Sequelize 모델 불러오기
 
 const app = express();
 
@@ -38,7 +39,7 @@ db.sequelize
   });
 
 // 서버 시작
-const PORT = process.env.PORT || 8000;
+const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
