@@ -1,12 +1,11 @@
 module.exports = (sequelize, DataTypes) => {
   const Chat = sequelize.define(
-    "chat",
+    "Chat",
     {
-      // 테이블 이름을 소문자로 설정
       id: {
         type: DataTypes.INTEGER,
-        autoIncrement: true,
         primaryKey: true,
+        autoIncrement: true,
       },
       room_id: {
         type: DataTypes.INTEGER,
@@ -24,7 +23,6 @@ module.exports = (sequelize, DataTypes) => {
           model: "user",
           key: "id",
         },
-        onDelete: "CASCADE",
       },
       content: {
         type: DataTypes.STRING(255),
@@ -32,14 +30,11 @@ module.exports = (sequelize, DataTypes) => {
       },
       created_at: {
         type: DataTypes.DATE,
-        allowNull: false,
-        defaultValue: DataTypes.NOW,
       },
     },
     {
-      tableName: "chat", // 테이블 이름을 소문자로 설정
+      tableName: "chat",
       timestamps: false,
-      underscored: true,
     }
   );
 

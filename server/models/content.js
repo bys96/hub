@@ -1,12 +1,11 @@
 module.exports = (sequelize, DataTypes) => {
   const Content = sequelize.define(
-    "content",
+    "Content",
     {
-      // 테이블 이름을 소문자로 설정
       id: {
         type: DataTypes.INTEGER,
-        autoIncrement: true,
         primaryKey: true,
+        autoIncrement: true,
       },
       room_id: {
         type: DataTypes.INTEGER,
@@ -33,31 +32,23 @@ module.exports = (sequelize, DataTypes) => {
           model: "user",
           key: "id",
         },
-        onDelete: "CASCADE",
       },
       content: {
-        type: DataTypes.TEXT,
-        allowNull: false,
+        type: DataTypes.STRING(50),
       },
       created_at: {
         type: DataTypes.DATE,
-        allowNull: false,
-        defaultValue: DataTypes.NOW,
       },
       updated_at: {
         type: DataTypes.DATE,
-        allowNull: true,
       },
       deleted_at: {
         type: DataTypes.DATE,
-        allowNull: true,
       },
     },
     {
-      tableName: "content", // 테이블 이름을 소문자로 설정
+      tableName: "content",
       timestamps: false,
-      paranoid: true,
-      underscored: true,
     }
   );
 

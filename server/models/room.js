@@ -1,12 +1,16 @@
 module.exports = (sequelize, DataTypes) => {
   const Room = sequelize.define(
-    "room",
+    "Room",
     {
-      // 테이블 이름을 소문자로 설정
       id: {
         type: DataTypes.INTEGER,
-        autoIncrement: true,
         primaryKey: true,
+        autoIncrement: true,
+      },
+      uuid: {
+        type: DataTypes.CHAR(36),
+        unique: true,
+        allowNull: false,
       },
       user_id: {
         type: DataTypes.INTEGER,
@@ -15,7 +19,6 @@ module.exports = (sequelize, DataTypes) => {
           model: "user",
           key: "id",
         },
-        onDelete: "CASCADE",
       },
       title: {
         type: DataTypes.STRING(255),
@@ -27,38 +30,28 @@ module.exports = (sequelize, DataTypes) => {
       },
       max_member: {
         type: DataTypes.INTEGER,
-        allowNull: false,
         defaultValue: 4,
       },
       duration: {
         type: DataTypes.INTEGER,
-        allowNull: false,
         defaultValue: 10,
       },
       created_at: {
         type: DataTypes.DATE,
-        allowNull: false,
-        defaultValue: DataTypes.NOW,
       },
       updated_at: {
         type: DataTypes.DATE,
-        allowNull: true,
       },
       deleted_at: {
         type: DataTypes.DATE,
-        allowNull: true,
       },
       status: {
         type: DataTypes.ENUM("active", "completed", "closed", "open"),
-        allowNull: false,
-        defaultValue: "open",
       },
     },
     {
-      tableName: "room", // 테이블 이름을 소문자로 설정
+      tableName: "room",
       timestamps: false,
-      paranoid: true,
-      underscored: true,
     }
   );
 
@@ -67,6 +60,9 @@ module.exports = (sequelize, DataTypes) => {
     Room.hasMany(models.Member, { foreignKey: "room_id" });
     Room.hasMany(models.Chat, { foreignKey: "room_id" });
     Room.hasMany(models.Kanban, { foreignKey: "room_id" });
+    Room.hasMany(models.Content, { foreignKey: "room_id" });
+    Room.hasMany(models.Chatkeyword, { foreignKey: "room_id" });
+    Room.belongsTo(models.User, { foreignKey: "user_id" });
   };
 
   return Room;

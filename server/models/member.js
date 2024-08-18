@@ -1,12 +1,11 @@
 module.exports = (sequelize, DataTypes) => {
   const Member = sequelize.define(
-    "member",
+    "Member",
     {
-      // 테이블 이름을 소문자로 설정
       id: {
         type: DataTypes.INTEGER,
-        autoIncrement: true,
         primaryKey: true,
+        autoIncrement: true,
       },
       room_id: {
         type: DataTypes.INTEGER,
@@ -15,7 +14,6 @@ module.exports = (sequelize, DataTypes) => {
           model: "room",
           key: "id",
         },
-        onDelete: "CASCADE",
       },
       user_id: {
         type: DataTypes.INTEGER,
@@ -24,27 +22,25 @@ module.exports = (sequelize, DataTypes) => {
           model: "user",
           key: "id",
         },
-        onDelete: "CASCADE",
       },
       role: {
         type: DataTypes.ENUM("host", "guest"),
-        allowNull: false,
       },
       created_at: {
         type: DataTypes.DATE,
-        allowNull: false,
-        defaultValue: DataTypes.NOW,
       },
       deleted_at: {
         type: DataTypes.DATE,
-        allowNull: true,
       },
     },
     {
-      tableName: "member", // 테이블 이름을 소문자로 설정
+      tableName: "member",
       timestamps: false,
-      paranoid: true,
-      underscored: true,
+      uniqueKeys: {
+        room_user_unique: {
+          fields: ["room_id", "user_id"],
+        },
+      },
     }
   );
 

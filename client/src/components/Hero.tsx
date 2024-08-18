@@ -5,7 +5,7 @@ const Hero: React.FC = () => {
   const navigate = useNavigate();
 
   const handleStartClick = () => {
-    navigate("/service"); // 서비스 페이지로 이동
+    navigate("/main"); // 서비스 페이지로 이동
   };
 
   return (

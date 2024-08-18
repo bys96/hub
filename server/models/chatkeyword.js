@@ -1,6 +1,6 @@
 module.exports = (sequelize, DataTypes) => {
-  const Keyword = sequelize.define(
-    "Keyword",
+  const Chatkeyword = sequelize.define(
+    "Chatkeyword",
     {
       id: {
         type: DataTypes.INTEGER,
@@ -16,18 +16,19 @@ module.exports = (sequelize, DataTypes) => {
         },
       },
       keyword: {
-        type: DataTypes.STRING(10),
+        type: DataTypes.STRING(20),
+        unique: true,
       },
     },
     {
-      tableName: "keyword",
+      tableName: "chatkeyword",
       timestamps: false,
     }
   );
 
-  Keyword.associate = (models) => {
-    Keyword.belongsTo(models.Room, { foreignKey: "room_id" });
+  Chatkeyword.associate = (models) => {
+    Chatkeyword.belongsTo(models.Room, { foreignKey: "room_id" });
   };
 
-  return Keyword;
+  return Chatkeyword;
 };

@@ -1,15 +1,24 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import LandingPage from "./LandingPage";
-import ServicePage from "./ServicePage"; // 새로 추가된 서비스 페이지
+import {
+  LandingPage,
+  ServicePage,
+  ChatPage,
+  KanbanPage,
+  MyPage,
+  LoginPage,
+} from "../pages";
+// 페이지들을 불러옵니다
 
 const RoutesSetup: React.FC = () => {
   return (
     <Router>
       <Routes>
         <Route path="/" element={<LandingPage />} />
-        <Route path="/service" element={<ServicePage />} />{" "}
-        {/* 서비스 페이지 라우트 추가 */}
+        <Route path="/main" element={<ServicePage />} />{" "}
+        <Route path="/mypage" element={<MyPage />} />
+        <Route path="/room/chat" element={<ChatPage />} />
+        <Route path="/room/kanban" element={<KanbanPage />} />
       </Routes>
     </Router>
   );
